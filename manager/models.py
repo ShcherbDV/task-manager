@@ -33,3 +33,34 @@ class TaskType(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Task(models.Model):
+    class Priority(models.TextChoices):
+        URGENT = "urgent", "Urgent"
+        HIGH_PRIORITY = "high_priority", "High priority"
+        MEDIUM_PRIORITY = "medium_priority", "Medium priority"
+        LOW_PRIORITY = "low_priority", "Low priority"
+        NOT_IMPORTANT = "not_important", "Everybody don't care about this"
+
+
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    deadline = models.DateTimeField()
+    is_completed = models.BooleanField(default=False)
+    priority = models.CharField(
+        max_length=20,
+        choices=Priority.choices,
+        default=Priority.URGENT,
+    )
+    task_type = models.ForeignKey(
+        TaskType, on_delete=models.CASCADE, related_name="tasks"
+    )
+    assignees = models.ManyToManyField(Worker, related_name="tasks")
+
+
+    class Meta:
+        ordering = ["deadline"]
+
+    def __str__(self):
+        return f"{self.name} ({self.get_priority_display()})"
