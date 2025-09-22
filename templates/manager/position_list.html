@@ -3,7 +3,7 @@
 {% block content %}
   <h1>
     Position List
-    <a href="{% url 'manager:index' %}" class="btn btn-primary link-to-page">
+    <a href="{% url 'manager:position-create' %}" class="btn btn-primary link-to-page">
       Create new position
     </a>
   </h1>
@@ -26,13 +26,13 @@
               {{ position.name }}
           </td>
           <td>
-              <a href="{% url 'manager:index' pk=position.id %}">
+              <a href="{% url 'manager:position-update' pk=position.id %}">
                 Update
               </a>
             </td>
             <td>
               <a style="color: red"
-                 href="{% url 'manager:index' pk=position.id %}">
+                 href="{% url 'manager:position-delete' pk=position.id %}">
                 Delete
               </a>
             </td>
