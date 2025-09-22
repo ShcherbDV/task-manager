@@ -14,7 +14,11 @@ class Position(models.Model):
 
 class Worker(AbstractUser):
     position = models.ForeignKey(
-        Position, on_delete=models.CASCADE, related_name="workers"
+        Position,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="workers",
     )
 
     class Meta:
@@ -43,7 +47,6 @@ class Task(models.Model):
         LOW_PRIORITY = "low_priority", "Low priority"
         NOT_IMPORTANT = "not_important", "Everybody don't care about this"
 
-
     name = models.CharField(max_length=100)
     description = models.TextField()
     deadline = models.DateTimeField()
@@ -57,7 +60,6 @@ class Task(models.Model):
         TaskType, on_delete=models.CASCADE, related_name="tasks"
     )
     assignees = models.ManyToManyField(Worker, related_name="tasks")
-
 
     class Meta:
         ordering = ["deadline"]
