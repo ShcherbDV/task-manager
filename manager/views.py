@@ -1,8 +1,8 @@
 from django.contrib.auth import get_user_model
 from django.shortcuts import render
+from django.views import generic
 
-from manager.models import Task
-
+from manager.models import Task, Position
 
 User = get_user_model()
 
@@ -16,3 +16,7 @@ def index(request):
     }
 
     return render(request, "manager/index.html", context=context)
+
+
+class PositionListView(generic.ListView):
+    model = Position
