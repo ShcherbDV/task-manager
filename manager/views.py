@@ -107,3 +107,51 @@ class TaskTypeDeleteView(generic.DeleteView):
         )
         return context
 
+
+class TaskListView(generic.ListView):
+    model = Task
+    paginate_by = 10
+    queryset = Task.objects.all().select_related("task_type")
+
+
+class TaskDetailView(generic.DetailView):
+    model = Task
+
+
+class TaskCreateView(generic.CreateView):
+    model = Task
+    fields = "__all__"
+    success_url = reverse_lazy("manager:task-list")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["previous_url"] = self.request.META.get(
+            "HTTP_REFERER", reverse_lazy("manager:task-list")
+        )
+        return context
+
+
+class TaskUpdateView(generic.UpdateView):
+    model = Task
+    fields = "__all__"
+    success_url = reverse_lazy("manager:task-list")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["previous_url"] = self.request.META.get(
+            "HTTP_REFERER", reverse_lazy("manager:task-list")
+        )
+        return context
+
+
+class TaskDeleteView(generic.DeleteView):
+    model = Task
+    success_url = reverse_lazy("manager:task-list")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["previous_url"] = self.request.META.get(
+            "HTTP_REFERER", reverse_lazy("manager:task-list")
+        )
+        return context
+
