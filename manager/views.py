@@ -155,3 +155,54 @@ class TaskDeleteView(generic.DeleteView):
         )
         return context
 
+
+class WorkerListView(generic.ListView):
+    model = User
+    paginate_by = 10
+
+
+class WorkerDetailView(generic.DetailView):
+    model = User
+    context_object_name = "worker"
+    queryset = User.objects.all().select_related("position")
+
+
+class WorkerCreateView(generic.CreateView):
+    model = User
+    context_object_name = "worker"
+    fields = "__all__"
+    success_url = reverse_lazy("manager:worker-list")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["previous_url"] = self.request.META.get(
+            "HTTP_REFERER", reverse_lazy("manager:worker-list")
+        )
+        return context
+
+
+class WorkerUpdateView(generic.UpdateView):
+    model = User
+    context_object_name = "worker"
+    fields = "__all__"
+    success_url = reverse_lazy("manager:worker-list")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["previous_url"] = self.request.META.get(
+            "HTTP_REFERER", reverse_lazy("manager:worker-list")
+        )
+        return context
+
+
+class WorkerDeleteView(generic.DeleteView):
+    model = User
+    context_object_name = "worker"
+    success_url = reverse_lazy("manager:worker-list")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["previous_url"] = self.request.META.get(
+            "HTTP_REFERER", reverse_lazy("manager:worker-list")
+        )
+        return context
