@@ -21,3 +21,21 @@ class WorkerPositionUpdateForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ("position",)
+
+
+class TaskNameSearchForm(forms.Form):
+    name = forms.CharField(
+        max_length=255,
+        required=False,
+        label="",
+        widget=forms.TextInput(attrs={"placeholder": "Search by name..."}),
+    )
+
+
+class WorkerUsernameSearchForm(forms.Form):
+    name = forms.CharField(
+        max_length=255,
+        required=False,
+        label="",
+        widget=forms.TextInput(attrs={"placeholder": "Search by username..."}),
+    )
