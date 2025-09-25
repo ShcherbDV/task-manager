@@ -3,17 +3,24 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
+from manager.forms import WorkerCreationForm, WorkerPositionUpdateForm
 from manager.models import Task, Position, TaskType
 
 User = get_user_model()
 
 def index(request):
     num_of_tasks = Task.objects.count()
+    num_of_complete_tasks = Task.objects.filter(is_completed=True).count()
+    num_of_uncompleted_tasks = Task.objects.filter(is_completed=False).count()
+    queryset = Task.objects.all().order_by('deadline')[:5]
     num_of_workers = User.objects.count()
 
     context = {
         "num_of_tasks": num_of_tasks,
+        "num_of_complete_tasks": num_of_complete_tasks,
+        "num_of_uncompleted_tasks": num_of_uncompleted_tasks,
         "num_of_workers": num_of_workers,
+        "queryset": queryset,
     }
 
     return render(request, "manager/index.html", context=context)
@@ -110,7 +117,7 @@ class TaskTypeDeleteView(generic.DeleteView):
 
 class TaskListView(generic.ListView):
     model = Task
-    paginate_by = 10
+    paginate_by = 5
     queryset = Task.objects.all().select_related("task_type")
 
 
@@ -158,7 +165,7 @@ class TaskDeleteView(generic.DeleteView):
 
 class WorkerListView(generic.ListView):
     model = User
-    paginate_by = 10
+    paginate_by = 5
 
 
 class WorkerDetailView(generic.DetailView):
@@ -169,8 +176,7 @@ class WorkerDetailView(generic.DetailView):
 
 class WorkerCreateView(generic.CreateView):
     model = User
-    context_object_name = "worker"
-    fields = "__all__"
+    form_class = WorkerCreationForm
     success_url = reverse_lazy("manager:worker-list")
 
     def get_context_data(self, **kwargs):
@@ -183,8 +189,7 @@ class WorkerCreateView(generic.CreateView):
 
 class WorkerUpdateView(generic.UpdateView):
     model = User
-    context_object_name = "worker"
-    fields = "__all__"
+    form_class = WorkerPositionUpdateForm
     success_url = reverse_lazy("manager:worker-list")
 
     def get_context_data(self, **kwargs):
