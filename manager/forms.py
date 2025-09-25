@@ -1,6 +1,10 @@
+from datetime import datetime
+
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
+
+from manager.models import Task
 
 User = get_user_model()
 
@@ -30,6 +34,18 @@ class TaskNameSearchForm(forms.Form):
         label="",
         widget=forms.TextInput(attrs={"placeholder": "Search by name..."}),
     )
+
+
+class TaskForm(forms.ModelForm):
+    assignees = forms.ModelMultipleChoiceField(
+        queryset=get_user_model().objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+    )
+    deadline = forms.DateTimeField(widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}))
+
+    class Meta:
+        model = Task
+        fields = "__all__"
 
 
 class WorkerUsernameSearchForm(forms.Form):
