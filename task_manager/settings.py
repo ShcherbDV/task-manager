@@ -108,6 +108,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTH_USER_MODEL = "manager.Worker"
 
+LOGIN_URL = "/registration/login/"
+
 LOGIN_REDIRECT_URL = "/"
 
 
