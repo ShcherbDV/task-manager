@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "layouts/base.html" %}
 
 {% block content %}
   <h1>
@@ -11,23 +11,20 @@
   {% if task_type_list %}
     <table class="table">
       <tr>
-        <th>ID</th>
         <th>Name</th>
-        <th>Update</th>
+        <th>Change name</th>
         <th>Delete</th>
       </tr>
 
       {% for task_type in task_type_list %}
         <tr>
           <td>
-              {{ task_type.id }}
-          </td>
-          <td>
               {{ task_type.name }}
           </td>
           <td>
-              <a href="{% url 'manager:task-type-update' pk=task_type.id %}">
-                Update
+              <a style="color: #0b5ed7"
+                  href="{% url 'manager:task-type-update' pk=task_type.id %}">
+                Change name
               </a>
             </td>
             <td>

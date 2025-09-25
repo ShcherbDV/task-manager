@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "layouts/base.html" %}
 
 {% block content %}
   <h1>
@@ -11,23 +11,20 @@
   {% if position_list %}
     <table class="table">
       <tr>
-        <th>ID</th>
         <th>Name</th>
-        <th>Update</th>
+        <th>Change name</th>
         <th>Delete</th>
       </tr>
 
       {% for position in position_list %}
         <tr>
           <td>
-              {{ position.id }}
-          </td>
-          <td>
               {{ position.name }}
           </td>
           <td>
-              <a href="{% url 'manager:position-update' pk=position.id %}">
-                Update
+              <a style="color: #0b5ed7"
+                  href="{% url 'manager:position-update' pk=position.id %}">
+                Change name
               </a>
             </td>
             <td>
