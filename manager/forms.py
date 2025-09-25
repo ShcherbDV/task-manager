@@ -33,7 +33,7 @@ class TaskNameSearchForm(forms.Form):
 
 
 class WorkerUsernameSearchForm(forms.Form):
-    name = forms.CharField(
+    username = forms.CharField(
         max_length=255,
         required=False,
         label="",
