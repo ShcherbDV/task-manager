@@ -17,14 +17,14 @@
   <p><strong>Position:</strong> {{ worker.position }}</p>
 
   <div class="ml-3">
-    <h4>Tasks</h4>
+    <h4>Tasks:</h4>
 
     {% for task in worker.tasks.all %}
         <hr>
         <p><strong>Task:</strong> {{ task.name }}</p>
         <p><strong>Task type:</strong> {{ task.task_type.name }}</p>
-        <p><strong>Task complete:</strong> {{ task.is_completed }}</p>
-        <p class="text-muted"><strong>Id:</strong> {{task.id}}</p>
+        <p><strong>Task complete:</strong>{% if task.is_completed == True %} Yes {% else %} No {% endif %}</p>
+        <p style="color: red"><strong>Deadline:</strong> {{task.deadline}}</p>
 
     {% empty %}
       <p>No tasks!</p>
