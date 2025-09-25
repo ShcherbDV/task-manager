@@ -78,6 +78,7 @@
               </li>
 
               <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
+              {% if user.is_authenticated %}
               <li class="nav-item">
                 <a href="{% url 'logout'%}?next={{request.path}}" class="nav-link">
                     <span class="sidebar-icon">
@@ -88,6 +89,7 @@
                     <span class="sidebar-text">Logout</span>
                 </a>
               </li>
+            {% endif %}
             </ul>
           </div>
         </nav>
