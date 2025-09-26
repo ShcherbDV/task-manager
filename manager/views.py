@@ -5,18 +5,24 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
-from manager.forms import WorkerCreationForm, WorkerPositionUpdateForm, TaskNameSearchForm, WorkerUsernameSearchForm, \
-    TaskForm
+from manager.forms import (
+    WorkerCreationForm,
+    WorkerPositionUpdateForm,
+    TaskNameSearchForm,
+    WorkerUsernameSearchForm,
+    TaskForm,
+)
 from manager.models import Task, Position, TaskType
 
 User = get_user_model()
+
 
 @login_required
 def index(request):
     num_of_tasks = Task.objects.count()
     num_of_complete_tasks = Task.objects.filter(is_completed=True).count()
     num_of_uncompleted_tasks = Task.objects.filter(is_completed=False).count()
-    queryset = Task.objects.all().order_by('deadline')[:5]
+    queryset = Task.objects.all().order_by("deadline")[:5]
     num_of_workers = User.objects.count()
 
     context = {
@@ -193,7 +199,9 @@ class WorkerListView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(WorkerListView, self).get_context_data(**kwargs)
         username = self.request.GET.get("username")
-        context["search_form"] = WorkerUsernameSearchForm(initial={"username": username})
+        context["search_form"] = WorkerUsernameSearchForm(
+            initial={"username": username}
+        )
         return context
 
 
