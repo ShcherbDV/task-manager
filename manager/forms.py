@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
@@ -41,7 +39,9 @@ class TaskForm(forms.ModelForm):
         queryset=get_user_model().objects.all(),
         widget=forms.CheckboxSelectMultiple,
     )
-    deadline = forms.DateTimeField(widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}))
+    deadline = forms.DateTimeField(
+        widget=forms.DateTimeInput(attrs={"type": "datetime-local"})
+    )
 
     class Meta:
         model = Task
