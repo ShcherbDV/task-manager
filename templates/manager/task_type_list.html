@@ -1,0 +1,44 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+  <h1>
+    Types of task
+    <a href="{% url 'manager:task-type-create' %}" class="btn btn-primary link-to-page">
+      Create new task type
+    </a>
+  </h1>
+
+  {% if task_type_list %}
+    <table class="table">
+      <tr>
+        <th>Name</th>
+        <th>Change name</th>
+        <th>Delete</th>
+      </tr>
+
+      {% for task_type in task_type_list %}
+        <tr>
+          <td>
+              {{ task_type.name }}
+          </td>
+          <td>
+              <a style="color: #0b5ed7"
+                  href="{% url 'manager:task-type-update' pk=task_type.id %}">
+                Change name
+              </a>
+            </td>
+            <td>
+              <a style="color: red"
+                 href="{% url 'manager:task-type-delete' pk=task_type.id %}">
+                Delete
+              </a>
+            </td>
+        </tr>
+      {% endfor %}
+    </table>
+
+  {% else %}
+    <p>There are no task types in your company yet.</p>
+  {% endif %}
+
+{% endblock %}

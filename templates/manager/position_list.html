@@ -1,0 +1,44 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+  <h1>
+    Position List
+    <a href="{% url 'manager:position-create' %}" class="btn btn-primary link-to-page">
+      Create new position
+    </a>
+  </h1>
+
+  {% if position_list %}
+    <table class="table">
+      <tr>
+        <th>Name</th>
+        <th>Change name</th>
+        <th>Delete</th>
+      </tr>
+
+      {% for position in position_list %}
+        <tr>
+          <td>
+              {{ position.name }}
+          </td>
+          <td>
+              <a style="color: #0b5ed7"
+                  href="{% url 'manager:position-update' pk=position.id %}">
+                Change name
+              </a>
+            </td>
+            <td>
+              <a style="color: red"
+                 href="{% url 'manager:position-delete' pk=position.id %}">
+                Delete
+              </a>
+            </td>
+        </tr>
+      {% endfor %}
+    </table>
+
+  {% else %}
+    <p>There are no positions in your company yet.</p>
+  {% endif %}
+
+{% endblock %}
