@@ -1,0 +1,25 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+  <h1>
+    {{ task.name }}
+    <a href="{% url 'manager:task-delete' pk=task.id %}" class="btn btn-danger link-to-page">
+      Delete
+    </a>
+
+    <a href="{% url 'manager:task-update' pk=task.id %}" class="btn btn-secondary link-to-page">
+      Update
+    </a>
+  </h1>
+  <h4>Task type: {{ task.task_type.name }}</h4>
+  <hr>
+  <p>{{ task.description }}</p>
+  <h1>Assignees</h1>
+  <hr>
+  <ul>
+    {% for worker in task.assignees.all %}
+      <li>{{ worker.username }} ({{ worker.first_name }} {{ worker.last_name }} - {{ worker.position }})</li>
+    {% endfor %}
+  </ul>
+  <hr>
+{% endblock %}
